@@ -2070,7 +2070,9 @@ private static int frameRendered= -1;
 private static GameObject _tweenEmpty;
 private static float dtEstimated;
 public static float dtManual;
+#if UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_5
 private static float previousRealTime;
+#endif
 private static float dt;
 private static float dtActual;
 private static int i;
@@ -2151,12 +2153,12 @@ public static void update() {
 		dtEstimated = Time.realtimeSinceStartup - previousRealTime;
 		if(dtEstimated>0.2f) // a catch put in, when at the start sometimes this number can grow unrealistically large
 			dtEstimated = 0.2f;
+		previousRealTime = Time.realtimeSinceStartup;
 		#else
 		dtEstimated = Time.unscaledDeltaTime;
 		#endif
 
 		
-		previousRealTime = Time.realtimeSinceStartup;
 		dtActual = Time.deltaTime;
 		maxTweenReached = 0;
 		finishedCnt = 0;
